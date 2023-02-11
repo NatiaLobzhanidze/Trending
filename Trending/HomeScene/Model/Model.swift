@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ItemResponse: Codable {
+struct MainResponse: Codable {
     let totalCount: Int
     let incompleteResults: Bool
     let items: [Item]
@@ -21,27 +21,31 @@ struct ItemResponse: Codable {
 
 struct Item: Codable {
     let fullName: String
-    let htmlURL: String
-    let owner: [Owner]
+    let githubAddress: String
+    let owner: Owner
     let description: String
-    let language: String
+    let language: String?
     let stars: Int
     
     enum CodingKeys: String, CodingKey {
         case fullName = "full_name"
-        case htmlURL = "html_url"
+        case githubAddress = "html_url"
         case stars = "stargazers_count"
         case owner, description, language
     }
 }
 
 struct Owner: Codable {
-    
     let image: String
-    let githubAdress: String
-    
     enum CodingKeys: String, CodingKey {
         case image = "avatar_url"
-        case githubAdress =  "html_url"
     }
+}
+
+struct DetailsData {
+    let image: String
+    let name: String
+    let description: String
+    let stars: Int
+    let language: String
 }

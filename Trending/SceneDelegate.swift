@@ -53,7 +53,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate {
     private func setupInitialViewController(with scene: UIWindowScene) {
         let initialController = HomeSceneConfiguration.configure()
-        let navigationController = UINavigationController(rootViewController: HomeSceneViewController())
+        let navigationController = UINavigationController(rootViewController: initialController)
         window = UIWindow(windowScene: scene)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

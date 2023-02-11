@@ -12,21 +12,20 @@
 
 import UIKit
 
-protocol HomeSceneBusinessLogic
-{
+protocol HomeSceneBusinessLogic {
+    func getData(request: HomeScene.GetResponse.Request)
 }
 
-protocol HomeSceneDataStore
-{
+protocol HomeSceneDataStore {
   //var name: String { get set }
 }
 
-class HomeSceneInteractor: HomeSceneBusinessLogic, HomeSceneDataStore
-{
+class HomeSceneInteractor:  HomeSceneDataStore {
+    
   var presenter: HomeScenePresentationLogic
   var worker: HomeSceneWorker
-  //var name: String = ""
-  
+  var fetchedItem = [Item]()
+    
   // MARK: Do something
     init(presenter: HomeScenePresentationLogic, worker: HomeSceneWorker) {
         self.presenter = presenter
@@ -40,4 +39,24 @@ class HomeSceneInteractor: HomeSceneBusinessLogic, HomeSceneDataStore
 //    let response = HomeScene.Something.Response()
 //    presenter?.presentSomething(response: response)
 //  }
+}
+
+extension HomeSceneInteractor: HomeSceneBusinessLogic {
+    
+    func getData(request: HomeScene.GetResponse.Request) {
+        Task {
+            do {
+                let mainResponse = try await worker.fetchData()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return}
+                    self.fetchedItem = mainResponse.items
+                    self.presenter.presentItem(response: HomeScene.GetResponse.Response(items:  self.fetchedItem ))
+                }
+            } catch {
+                //Error handling
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
 }
