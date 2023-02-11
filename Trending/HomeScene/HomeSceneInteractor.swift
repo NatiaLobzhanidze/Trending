@@ -13,50 +13,37 @@
 import UIKit
 
 protocol HomeSceneBusinessLogic {
-    func getData(request: HomeScene.GetResponse.Request)
+    func getData(request: HomeScene.GetDetails.Request)
 }
 
-protocol HomeSceneDataStore {
-  //var name: String { get set }
-}
+protocol HomeSceneDataStore { }
 
-class HomeSceneInteractor:  HomeSceneDataStore {
+final class HomeSceneInteractor:  HomeSceneDataStore {
     
-  var presenter: HomeScenePresentationLogic
-  var worker: HomeSceneWorker
-  var fetchedItem = [Item]()
+    var presenter: HomeScenePresentationLogic
+    var worker: HomeSceneWorker
+    var fetchedItem = [Item]()
     
-  // MARK: Do something
     init(presenter: HomeScenePresentationLogic, worker: HomeSceneWorker) {
         self.presenter = presenter
         self.worker = worker
     }
-//  func doSomething(request: HomeScene.Something.Request)
-//  {
-//    worker = HomeSceneWorker()
-//    worker?.doSomeWork()
-//
-//    let response = HomeScene.Something.Response()
-//    presenter?.presentSomething(response: response)
-//  }
 }
 
 extension HomeSceneInteractor: HomeSceneBusinessLogic {
     
-    func getData(request: HomeScene.GetResponse.Request) {
+    func getData(request: HomeScene.GetDetails.Request) {
         Task {
             do {
                 let mainResponse = try await worker.fetchData()
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return}
                     self.fetchedItem = mainResponse.items
-                    self.presenter.presentItem(response: HomeScene.GetResponse.Response(items:  self.fetchedItem ))
+                    self.presenter.presentItem(response: HomeScene.GetDetails.Response(items:  self.fetchedItem))
                 }
             } catch {
-                //Error handling
-                print(error.localizedDescription)
+                presenter.presentError(error: HomeScene.GetDetails.Error())
             }
         }
     }
-    
 }

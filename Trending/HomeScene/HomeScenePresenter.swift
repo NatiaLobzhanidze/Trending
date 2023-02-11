@@ -13,22 +13,21 @@
 import UIKit
 
 protocol HomeScenePresentationLogic {
-    func presentItem(response: HomeScene.GetResponse.Response)
+    func presentItem(response: HomeScene.GetDetails.Response)
+    func presentError(error: HomeScene.GetDetails.Error)
 }
 
-class HomeScenePresenter: HomeScenePresentationLogic {
-  
-  weak var viewController: HomeSceneDisplayLogic?
-  
-  // MARK: Do something
-    func presentItem(response: HomeScene.GetResponse.Response) {
+final class HomeScenePresenter: HomeScenePresentationLogic {
+    
+    weak var viewController: HomeSceneDisplayLogic?
+    
+    func presentItem(response: HomeScene.GetDetails.Response) {
         let viewModel = response.items
-      
-        viewController?.displayData(viewModel: HomeScene.GetResponse.ViewModel(data: viewModel))
+        
+        viewController?.displayData(viewModel: HomeScene.GetDetails.ViewModel(data: viewModel))
     }
     
-//  func presentSomething(response: HomeScene.Something.Response) {
-//    let viewModel = HomeScene.Something.ViewModel()
-//    viewController?.displaySomething(viewModel: viewModel)
-//  }
+    func presentError(error: HomeScene.GetDetails.Error) {
+        viewController?.displayErrorMessage(error: HomeScene.GetDetails.Error())
+    }
 }

@@ -12,51 +12,28 @@
 
 import UIKit
 
-@objc protocol HomeSceneRoutingLogic
-{
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+@objc protocol HomeSceneRoutingLogic {
+    func routToErrorAnimation()
 }
 
-protocol HomeSceneDataPassing
-{
-  var dataStore: HomeSceneDataStore? { get }
+protocol HomeSceneDataPassing {
+    var dataStore: HomeSceneDataStore { get }
 }
 
-class HomeSceneRouter: NSObject, HomeSceneRoutingLogic, HomeSceneDataPassing
-{
+final class HomeSceneRouter: NSObject, HomeSceneRoutingLogic, HomeSceneDataPassing {
+    
     weak var viewController: HomeSceneViewController?
-  var dataStore: HomeSceneDataStore?
-  
-  // MARK: Routing
+    var dataStore: HomeSceneDataStore
+ 
     init(dataStore: HomeSceneDataStore) {
         self.dataStore = dataStore
     }
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
-
-  // MARK: Navigation
-  
-  //func navigateToSomewhere(source: HomeSceneViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
-  // MARK: Passing data
-  
-  //func passDataToSomewhere(source: HomeSceneDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+    
+    // MARK: Navigation
+    func routToErrorAnimation() {
+        DispatchQueue.main.async {[weak self] in
+            let vc = LottieAnimatedScene()
+            self?.viewController?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }

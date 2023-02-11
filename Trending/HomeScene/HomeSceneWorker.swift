@@ -29,6 +29,4 @@ extension HomeSceneWorker: HomeSceneWorkerLogic {
     func fetchData() async throws -> MainResponse {
         try await api.fetchData(urlString: apiUrl, decodingType: MainResponse.self)
     }
-    
-    
 }

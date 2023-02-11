@@ -14,23 +14,17 @@ import UIKit
 import SkeletonView
 
 protocol HomeSceneDisplayLogic: AnyObject {
-    func displayData(viewModel: HomeScene.GetResponse.ViewModel)
+    func displayData(viewModel: HomeScene.GetDetails.ViewModel)
+    func displayErrorMessage(error: HomeScene.GetDetails.Error)
 }
 
 class HomeSceneViewController: UIViewController {
     let interactor: HomeSceneBusinessLogic
     let router: (HomeSceneRoutingLogic & HomeSceneDataPassing)
     
-    let tableview: UITableView = {
-        let view = UITableView()
-        return view
-    }()
-    
+    let tableview = UITableView()
     var dataSource = [Item]()
-    
-    var selectedCellIndexPath: NSIndexPath?
-    var selectedCellHeight: CGFloat = UITableView.automaticDimension
-    var unselectedCellHeight: CGFloat = 80.0
+
     // MARK: Object lifecycle
     
     init(interactor: HomeSceneBusinessLogic, router: (HomeSceneRoutingLogic & HomeSceneDataPassing)) {
@@ -64,13 +58,15 @@ class HomeSceneViewController: UIViewController {
     }
     private func setUpUI() {
         self.view.backgroundColor = .white
+        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.hidesBackButton = true
         title = "Trending"
         view.addSubview(tableview)
         tableview.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 5, paddingBottom: 10, paddingRight: 5)
     }
         
     private func fetchData() {
-        let request = HomeScene.GetResponse.Request()
+        let request = HomeScene.GetDetails.Request()
         interactor.getData(request: request)
     }
     private func fillDataSource(with items: [Item]) {
@@ -80,9 +76,12 @@ class HomeSceneViewController: UIViewController {
 }
 
 extension HomeSceneViewController: HomeSceneDisplayLogic {
-    func displayData(viewModel: HomeScene.GetResponse.ViewModel) {
+    func displayErrorMessage(error: HomeScene.GetDetails.Error) {
+        router.routToErrorAnimation()
+    }
+    
+    func displayData(viewModel: HomeScene.GetDetails.ViewModel) {
         self.fillDataSource(with: viewModel.data)
-       // print("Prints count of Data", viewModel.data.count)
     }
 }
 
