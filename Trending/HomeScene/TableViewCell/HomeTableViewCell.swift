@@ -9,11 +9,8 @@ import UIKit
 import SkeletonView
 
 enum LanguageIconColors {
-   static var colors = [ "🟢", "🟡", "🟠", "🔴", "🟤", "🔵"]
-//   ""
-     // UIColor.lightGray, UIColor.carrot, UIColor.red, UIColor.blue, UIColor.greenSea
+    static var colors = [ "🟢", "🟡", "🟠", "🔴", "🟤", "🔵"]
 }
-
 
 final class HomeTableViewCell: UITableViewCell {
     
@@ -31,18 +28,17 @@ final class HomeTableViewCell: UITableViewCell {
     var fullName: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-       // lb.font = .systemFont(ofSize: 16)
         lb.numberOfLines = 0
         lb.setContentHuggingPriority(.defaultHigh, for: .vertical)
         lb.clipsToBounds = true
         lb.isSkeletonable = true
         return lb
     }()
-
+    
     let githubAddress: UILabel = {
         let lb = UILabel()
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 14, weight: .semibold)
+        lb.font = .systemFont(ofSize: 13, weight: .regular)
         lb.numberOfLines = 0
         return lb
     }()
@@ -59,20 +55,17 @@ final class HomeTableViewCell: UITableViewCell {
     
     let language: UILabel = {
         let lb = UILabel()
-//lb.textColor = .black
-        lb.font = .systemFont(ofSize: 13, weight: .bold)
+        lb.font = .systemFont(ofSize: 12, weight: .bold)
         return lb
     }()
     
     let stars: UILabel = {
         let lb = UILabel()
-      //  lb.textColor = .black
-        lb.font = .systemFont(ofSize: 13, weight: .bold)
+        lb.font = .systemFont(ofSize: 12, weight: .bold)
         lb.tintColor = .yellow
         return lb
     }()
     
-  
     //MARK: View lifeCycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -92,7 +85,6 @@ final class HomeTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
     
     // MARK: Private Methods
     
@@ -119,10 +111,6 @@ final class HomeTableViewCell: UITableViewCell {
                                   paddingBottom: 5,
                                   paddingRight: 15)
         verticalStackview.isSkeletonable = true
-        
-//        contentView.addSubview(horizontalStackview)
-//        horizontalStackview.anchor(top: verticalStackview.bottomAnchor, left: verticalStackview.leftAnchor, bottom: contentView.bottomAnchor, right: verticalStackview.rightAnchor, paddingTop: 15, paddingLeft: 0, paddingBottom: 20, paddingRight: 0)
-
     }
     
     //MARK: Configure Cell
@@ -133,8 +121,6 @@ final class HomeTableViewCell: UITableViewCell {
         self.stars.text = " ⭐️ \(item.stars)"
         guard let language = item.language , let circle = LanguageIconColors.colors.randomElement() else { return }
         self.language.text = "\( circle) \(language)"
-       
-       
         self.githubAddress.text = "Home page: \(item.githubAddress)"
         guard let defaultImageURL = URL(string: "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg")  else { return }
         self.avatarImage.load(url: ((URL(string: item.owner.image) ?? defaultImageURL)))

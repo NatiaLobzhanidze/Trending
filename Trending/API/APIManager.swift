@@ -20,11 +20,9 @@ final class APIManager {
               (200...299).contains(httpResponse.statusCode) else {
             throw ApiError.httpError
         }
-        print(String(data: data, encoding: .utf8))
         do {
             return try JSONDecoder().decode(decodingType.self, from: data)
         } catch {
-            print(error)
             throw ApiError.decodingError
         }
     }
