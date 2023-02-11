@@ -11,18 +11,28 @@
 //
 
 import UIKit
+import SkeletonView
 
 protocol HomeSceneDisplayLogic: AnyObject {
-  func displaySomething(viewModel: HomeScene.Something.ViewModel)
+    func displayData(viewModel: HomeScene.GetResponse.ViewModel)
 }
 
-class HomeSceneViewController: UIViewController, HomeSceneDisplayLogic
-{
-  var interactor: HomeSceneBusinessLogic?
-  var router: (HomeSceneRoutingLogic & HomeSceneDataPassing)?
-
-  // MARK: Object lifecycle
- 
+class HomeSceneViewController: UIViewController {
+    let interactor: HomeSceneBusinessLogic
+    let router: (HomeSceneRoutingLogic & HomeSceneDataPassing)
+    
+    let tableview: UITableView = {
+        let view = UITableView()
+        return view
+    }()
+    
+    var dataSource = [Item]()
+    
+    var selectedCellIndexPath: NSIndexPath?
+    var selectedCellHeight: CGFloat = UITableView.automaticDimension
+    var unselectedCellHeight: CGFloat = 80.0
+    // MARK: Object lifecycle
+    
     init(interactor: HomeSceneBusinessLogic, router: (HomeSceneRoutingLogic & HomeSceneDataPassing)) {
         self.interactor = interactor
         self.router = router
@@ -33,38 +43,87 @@ class HomeSceneViewController: UIViewController, HomeSceneDisplayLogic
         fatalError("init(coder:) has not been implemented")
     }
     
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-  {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-  }
-  
-  // MARK: Setup
-  
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.isSkeletonable = true
+        tableview.isSkeletonable = true
+        setUpUI()
+        fetchData()
+        configureTableView()
+        self.view.showAnimatedSkeleton()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+          self.view.hideSkeleton()
+        }
+    }
+    // MARK: Methods
+    
+    private func configureTableView() {
+        tableview.delegate = self
+        tableview.dataSource = self
+        tableview.registerClass(class: HomeTableViewCell.self)
+    }
+    private func setUpUI() {
+        self.view.backgroundColor = .white
+        title = "Trending"
+        view.addSubview(tableview)
+        tableview.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 5, paddingBottom: 10, paddingRight: 5)
+    }
+        
+    private func fetchData() {
+        let request = HomeScene.GetResponse.Request()
+        interactor.getData(request: request)
+    }
+    private func fillDataSource(with items: [Item]) {
+        dataSource = items
+        tableview.reloadData()
+    }
+}
 
-  // MARK: Routing
-  
-  
-  // MARK: View lifecycle
-  
-  override func viewDidLoad()
-  {
-    super.viewDidLoad()
-      self.view.backgroundColor = .blue
-    doSomething()
-  }
-  
-  // MARK: Do something
-  
-  //@IBOutlet weak var nameTextField: UITextField!
-  
-  func doSomething()
-  {
-  //  let request = HomeScene.Something.Request()
-//    interactor?.doSomething(request: request)
-  }
-  
-  func displaySomething(viewModel: HomeScene.Something.ViewModel)
-  {
-    //nameTextField.text = viewModel.name
-  }
+extension HomeSceneViewController: HomeSceneDisplayLogic {
+    func displayData(viewModel: HomeScene.GetResponse.ViewModel) {
+        self.fillDataSource(with: viewModel.data)
+       // print("Prints count of Data", viewModel.data.count)
+    }
+}
+
+extension HomeSceneViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableview.deque(class: HomeTableViewCell.self, for: indexPath)
+        let data = dataSource[indexPath.row]
+        cell.configureCell(with: data)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        tableView.indexPathForSelectedRow?.row == indexPath.row ? UITableView.automaticDimension : 90
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let cell = tableview.cellForRow(at: indexPath)
+        if cell?.isSelected == true {
+            tableview.deselectRow(at: indexPath, animated: true)
+            tableView.rowHeight = 90
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            return nil
+        } else {
+           return  indexPath
+        }
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "HomeTableViewCell"
+    }
 }

@@ -12,20 +12,18 @@
 
 import UIKit
 
-enum HomeScene
-{
+enum HomeScene {
   // MARK: Use cases
   
-  enum Something
-  {
-    struct Request
-    {
+  enum GetResponse {
+      
+    struct Request {
     }
-    struct Response
-    {
+    struct Response {
+        let items: [Item]
     }
-    struct ViewModel
-    {
+    struct ViewModel {
+        let data: [Item]
     }
   }
 }

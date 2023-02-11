@@ -12,11 +12,23 @@
 
 import UIKit
 
+protocol HomeSceneWorkerLogic {
+    func fetchData() async throws -> MainResponse
+}
 
 final class HomeSceneWorker {
-    private var api: APIManager
+    private let api: APIManager
+    private let apiUrl = ApiUrl.mainURL.rawValue
     
     init(api: APIManager) {
         self.api = api
     }
+}
+
+extension HomeSceneWorker: HomeSceneWorkerLogic {
+    func fetchData() async throws -> MainResponse {
+        try await api.fetchData(urlString: apiUrl, decodingType: MainResponse.self)
+    }
+    
+    
 }

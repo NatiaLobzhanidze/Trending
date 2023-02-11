@@ -22,6 +22,12 @@
 		600887E02993CD2F003C5CDD /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600887DF2993CD2F003C5CDD /* APIError.swift */; };
 		600887E22993D16B003C5CDD /* APIUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600887E12993D16B003C5CDD /* APIUrl.swift */; };
 		600887E52993D2FE003C5CDD /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600887E42993D2FE003C5CDD /* Model.swift */; };
+		600887F5299501B2003C5CDD /* TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600887F4299501B2003C5CDD /* TableViewExtensions.swift */; };
+		600887F7299501D8003C5CDD /* ConstraintsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600887F6299501D8003C5CDD /* ConstraintsExtensions.swift */; };
+		600887F92995031A003C5CDD /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600887F82995031A003C5CDD /* HomeTableViewCell.swift */; };
+		600887FB299507FE003C5CDD /* ImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600887FA299507FE003C5CDD /* ImageViewExtensions.swift */; };
+		604A78FC2995457E006E3053 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 604A78FB2995457E006E3053 /* SkeletonView */; };
+		604A78FE2997C5D7006E3053 /* LabelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A78FD2997C5D7006E3053 /* LabelExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +48,11 @@
 		600887DF2993CD2F003C5CDD /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		600887E12993D16B003C5CDD /* APIUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIUrl.swift; sourceTree = "<group>"; };
 		600887E42993D2FE003C5CDD /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		600887F4299501B2003C5CDD /* TableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExtensions.swift; sourceTree = "<group>"; };
+		600887F6299501D8003C5CDD /* ConstraintsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintsExtensions.swift; sourceTree = "<group>"; };
+		600887F82995031A003C5CDD /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		600887FA299507FE003C5CDD /* ImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtensions.swift; sourceTree = "<group>"; };
+		604A78FD2997C5D7006E3053 /* LabelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				604A78FC2995457E006E3053 /* SkeletonView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +88,7 @@
 			children = (
 				600887B92993BD84003C5CDD /* AppDelegate.swift */,
 				600887BB2993BD84003C5CDD /* SceneDelegate.swift */,
+				600887F329950190003C5CDD /* Utilities */,
 				600887DE2993CD18003C5CDD /* API */,
 				600887D92993CBA4003C5CDD /* HomeScene */,
 				600887C22993BD87003C5CDD /* Assets.xcassets */,
@@ -88,12 +101,13 @@
 		600887D92993CBA4003C5CDD /* HomeScene */ = {
 			isa = PBXGroup;
 			children = (
+				600887F22995010C003C5CDD /* TableViewCell */,
 				600887E32993D2EA003C5CDD /* Model */,
 				600887DA2993CCB4003C5CDD /* HomeSceneConfiguration.swift */,
 				600887D12993CB7D003C5CDD /* HomeSceneViewController.swift */,
 				600887CD2993CB7D003C5CDD /* HomeScenePresenter.swift */,
-				600887CE2993CB7D003C5CDD /* HomeSceneWorker.swift */,
 				600887D22993CB7D003C5CDD /* HomeSceneInteractor.swift */,
+				600887CE2993CB7D003C5CDD /* HomeSceneWorker.swift */,
 				600887CF2993CB7D003C5CDD /* HomeSceneRouter.swift */,
 				600887D02993CB7D003C5CDD /* HomeSceneModels.swift */,
 			);
@@ -118,6 +132,25 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		600887F22995010C003C5CDD /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				600887F82995031A003C5CDD /* HomeTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		600887F329950190003C5CDD /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				600887F4299501B2003C5CDD /* TableViewExtensions.swift */,
+				600887F6299501D8003C5CDD /* ConstraintsExtensions.swift */,
+				600887FA299507FE003C5CDD /* ImageViewExtensions.swift */,
+				604A78FD2997C5D7006E3053 /* LabelExtensions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,6 +167,9 @@
 			dependencies = (
 			);
 			name = Trending;
+			packageProductDependencies = (
+				604A78FB2995457E006E3053 /* SkeletonView */,
+			);
 			productName = Trending;
 			productReference = 600887B62993BD84003C5CDD /* Trending.app */;
 			productType = "com.apple.product-type.application";
@@ -162,6 +198,9 @@
 				Base,
 			);
 			mainGroup = 600887AD2993BD84003C5CDD;
+			packageReferences = (
+				604A78FA2995457E006E3053 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+			);
 			productRefGroup = 600887B72993BD84003C5CDD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -195,11 +234,16 @@
 				600887D82993CB7D003C5CDD /* HomeSceneInteractor.swift in Sources */,
 				600887D62993CB7D003C5CDD /* HomeSceneModels.swift in Sources */,
 				600887E52993D2FE003C5CDD /* Model.swift in Sources */,
+				600887F7299501D8003C5CDD /* ConstraintsExtensions.swift in Sources */,
+				604A78FE2997C5D7006E3053 /* LabelExtensions.swift in Sources */,
 				600887BA2993BD84003C5CDD /* AppDelegate.swift in Sources */,
+				600887FB299507FE003C5CDD /* ImageViewExtensions.swift in Sources */,
 				600887D32993CB7D003C5CDD /* HomeScenePresenter.swift in Sources */,
 				600887E22993D16B003C5CDD /* APIUrl.swift in Sources */,
 				600887BC2993BD84003C5CDD /* SceneDelegate.swift in Sources */,
+				600887F5299501B2003C5CDD /* TableViewExtensions.swift in Sources */,
 				600887D72993CB7D003C5CDD /* HomeSceneViewController.swift in Sources */,
+				600887F92995031A003C5CDD /* HomeTableViewCell.swift in Sources */,
 				600887D42993CB7D003C5CDD /* HomeSceneWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +389,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -371,6 +416,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -406,6 +452,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		604A78FA2995457E006E3053 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		604A78FB2995457E006E3053 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 604A78FA2995457E006E3053 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 600887AE2993BD84003C5CDD /* Project object */;
 }

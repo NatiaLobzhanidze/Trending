@@ -17,11 +17,14 @@ final class APIManager {
         guard let url = URL(string: urlString) else { throw ApiError.invalidUrl }
         let (data, response) = try await session.data(from: url)
         guard let httpResponse = response as? HTTPURLResponse,
-        (200...299).contains(httpResponse.statusCode) else { throw ApiError.httpError }
+              (200...299).contains(httpResponse.statusCode) else {
+            throw ApiError.httpError
+        }
+        print(String(data: data, encoding: .utf8))
         do {
-           return try JSONDecoder().decode(decodingType.self, from: data)
+            return try JSONDecoder().decode(decodingType.self, from: data)
         } catch {
-            print(error.localizedDescription)
+            print(error)
             throw ApiError.decodingError
         }
     }
